@@ -290,15 +290,8 @@ class SoundFX {
 
   playStreak() {
     this.init();
-    if (window.soundcn) {
-      if (typeof window.soundcn.playScore === "function") {
-        window.soundcn.playScore({ playbackRate: 1.15, volume: 1 });
-      }
-      setTimeout(() => {
-        if (window.soundcn && typeof window.soundcn.playVictory === "function") {
-          window.soundcn.playVictory({ playbackRate: 1.35, volume: 0.85 });
-        }
-      }, 100);
+    if (window.soundcn && typeof window.soundcn.playScore === "function") {
+      window.soundcn.playScore({ playbackRate: 1.25, volume: 1 });
       return;
     }
     this.playTone(880, 0.15, "triangle", 0.2);
@@ -503,13 +496,6 @@ class ExhibitionApp {
     this.gameStreakPill = document.getElementById("game-streak-pill");
     this.gameStreakFlame = document.getElementById("game-streak-flame");
     this.gameStreakNum = document.getElementById("game-streak-num");
-
-    // Streak Burst Overlay Elements (Giant screen-filling zoom to badge)
-    this.streakBurstOverlay = document.getElementById("streak-burst-overlay");
-    this.streakBurstContainer = document.getElementById("streak-burst-container");
-    this.giantFlameEmoji = document.getElementById("giant-flame-emoji");
-    this.giantStreakCount = document.getElementById("giant-streak-count");
-    this.giantStreakSub = document.getElementById("giant-streak-sub");
 
     this.detectAnimalImg = document.getElementById("detect-animal-img");
     this.detectAnimalName = document.getElementById("detect-animal-name");
@@ -718,117 +704,6 @@ class ExhibitionApp {
     }
   }
 
-  /**
-   * Giant Snapchat-style streak explosion animation:
-   * 1. Massive flame emoji fills almost the whole screen with glowing halo and fiery sparks.
-   * 2. Confetti explosion & triumphant sound fanfare.
-   * 3. Smoothly condenses, shrinks to badge size, and flies directly into the top bar streak pill.
-   * 4. Pill absorbs the flame with an elastic pop & sound effect, then advances to feedback.
-   */
-  playGiantStreakAnimation(streakCount, onComplete) {
-    if (!this.streakBurstOverlay || !this.streakBurstContainer) {
-      this.updateStreakUI();
-      soundFX.playStreak();
-      if (typeof onComplete === "function") onComplete();
-      return;
-    }
-
-    // Set count text & badge status
-    if (this.giantStreakCount) {
-      this.giantStreakCount.textContent = `${streakCount} IN A ROW!`;
-    }
-    if (this.giantStreakSub) {
-      this.giantStreakSub.textContent = (streakCount === 3)
-        ? "🔥 STREAK UNLOCKED! 🔥"
-        : "🔥 ON FIRE! KEEP IT UP! 🔥";
-    }
-
-    // Reset previous animation state
-    this.streakBurstContainer.classList.remove("flying");
-    this.streakBurstOverlay.classList.remove("flying-out");
-    this.streakBurstContainer.style.removeProperty("--target-x");
-    this.streakBurstContainer.style.removeProperty("--target-y");
-
-    // Activate overlay — giant flame dominates the screen
-    this.streakBurstOverlay.classList.add("active");
-    this.streakBurstOverlay.setAttribute("aria-hidden", "false");
-
-    // Audio & Confetti burst
-    soundFX.playStreak();
-    this.triggerStreakConfetti();
-
-    // Hold in center for dramatic impact (780ms)
-    setTimeout(() => {
-      // Find exact position of the streak pill in top bar
-      const targetEl = this.gameStreakFlame || this.gameStreakPill;
-      let deltaX = 0;
-      let deltaY = 0;
-
-      if (targetEl) {
-        const targetRect = targetEl.getBoundingClientRect();
-        const targetCenterX = targetRect.left + targetRect.width / 2;
-        const targetCenterY = targetRect.top + targetRect.height / 2;
-
-        const startCenterX = window.innerWidth / 2;
-        const startCenterY = window.innerHeight / 2;
-
-        deltaX = Math.round(targetCenterX - startCenterX);
-        deltaY = Math.round(targetCenterY - startCenterY);
-      }
-
-      // Configure fly-to coordinates
-      this.streakBurstContainer.style.setProperty("--target-x", `${deltaX}px`);
-      this.streakBurstContainer.style.setProperty("--target-y", `${deltaY}px`);
-
-      // Begin flight and shrink to badge
-      this.streakBurstContainer.classList.add("flying");
-      this.streakBurstOverlay.classList.add("flying-out");
-
-      // Impact when flame reaches the streak pill
-      setTimeout(() => {
-        // Pill absorbs the flame!
-        this.updateStreakUI();
-        if (this.gameStreakPill) {
-          this.gameStreakPill.classList.add("on-fire");
-          this.gameStreakPill.classList.add("impact-pop");
-          setTimeout(() => {
-            if (this.gameStreakPill) this.gameStreakPill.classList.remove("impact-pop");
-          }, 600);
-        }
-
-        // Play coin collect impact sound
-        if (window.soundcn && typeof window.soundcn.playScore === "function") {
-          window.soundcn.playScore({ playbackRate: 1.25, volume: 0.95 });
-        }
-
-        // Clean up overlay
-        this.streakBurstOverlay.classList.remove("active", "flying-out");
-        this.streakBurstOverlay.setAttribute("aria-hidden", "true");
-        this.streakBurstContainer.classList.remove("flying");
-        this.streakBurstContainer.style.removeProperty("--target-x");
-        this.streakBurstContainer.style.removeProperty("--target-y");
-
-        // Proceed to feedback screen after badge impact celebration
-        setTimeout(() => {
-          if (typeof onComplete === "function") {
-            onComplete();
-          }
-        }, 320);
-      }, 680);
-    }, 780);
-  }
-
-  triggerStreakConfetti() {
-    if (window.confetti) {
-      window.confetti({
-        particleCount: 75,
-        spread: 90,
-        origin: { y: 0.5 },
-        colors: ["#FF1744", "#FF5722", "#FF9800", "#FFD600", "#FF3D00"]
-      });
-    }
-  }
-
   renderCurrentQuestion() {
     const q = this.questions[this.currentIndex];
     this.roundTrackerText.textContent = `Round ${this.currentIndex + 1} / ${this.questions.length}`;
@@ -1012,9 +887,13 @@ class ExhibitionApp {
         this.bestStreak = this.currentStreak;
       }
       this.gameScoreNum.textContent = String(this.score);
+      this.updateStreakUI();
 
-      // Configure banner on feedback screen for when streak is active
+      soundFX.playCorrect();
+
+      // Fire Streak Announcement (3+ in a row)
       if (this.currentStreak >= 3) {
+        soundFX.playStreak();
         if (this.correctStreakBanner) {
           this.correctStreakBanner.style.display = "inline-flex";
           if (this.correctStreakText) {
@@ -1027,30 +906,13 @@ class ExhibitionApp {
         }
       }
 
-      // Check if streak is active (3+ consecutive correct answers)
-      if (this.currentStreak >= 3) {
-        // Giant screen-filling streak emoji takeover -> shrinks into top bar badge!
-        this.playGiantStreakAnimation(this.currentStreak, () => {
-          this.showCorrectScreen(q);
-        });
-      } else {
-        this.updateStreakUI();
-        soundFX.playCorrect();
-        this.showCorrectScreen(q);
-        this.triggerConfetti();
-      }
+      // Trigger Wireframe 5 (Correct Answer Screen)
+      this.showCorrectScreen(q);
+      this.triggerConfetti();
     } else {
       // Extinguish streak
-      const hadStreak = this.currentStreak >= 3;
       this.currentStreak = 0;
       this.updateStreakUI();
-
-      if (hadStreak && this.gameStreakPill) {
-        this.gameStreakPill.classList.add("extinguish-shake");
-        setTimeout(() => {
-          if (this.gameStreakPill) this.gameStreakPill.classList.remove("extinguish-shake");
-        }, 500);
-      }
 
       soundFX.playWrong();
       // Trigger Wireframe 6 (Wrong Answer Screen)
