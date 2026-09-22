@@ -1,6 +1,7 @@
 /* ==========================================================================
    "GONE OR STILL HERE?" — Museum Educational Web Game Engine
-   Featuring Google Teachable Machine, SoundCN Audio Library & 18 Animal Cards
+   Featuring Google Teachable Machine, SoundCN Audio Library, 18 Animal Cards,
+   Snapchat-Style Fire Streaks, Hands-Free Auto-Timers & Large Kiosk Viewfinder
    ========================================================================== */
 
 // Configurable Google Teachable Machine Model URL
@@ -287,6 +288,15 @@ class SoundFX {
     this.playSynthCorrect();
   }
 
+  playStreak() {
+    this.init();
+    if (window.soundcn && typeof window.soundcn.playScore === "function") {
+      window.soundcn.playScore({ playbackRate: 1.25, volume: 1 });
+      return;
+    }
+    this.playTone(880, 0.15, "triangle", 0.2);
+  }
+
   playWrong() {
     this.init();
     if (window.soundcn && typeof window.soundcn.playWrong === "function") {
@@ -424,6 +434,17 @@ class ExhibitionApp {
     this.score = 0;
     this.currentScreen = "home";
 
+    // Snapchat-Style Fire Streak Tracking
+    this.currentStreak = 0;
+    this.bestStreak = 0;
+
+    // Hands-Free Auto-Advance Timer
+    this.autoAdvanceTimer = null;
+    this.autoAdvanceInterval = null;
+
+    // Inter-question Grace Period (Allows standing user to lower their card)
+    this.isGracePeriodActive = false;
+
     // Recognition debouncer
     this.candidateClass = "NOTHING";
     this.candidateStartTime = 0;
@@ -472,26 +493,30 @@ class ExhibitionApp {
     this.roundTrackerText = document.getElementById("round-tracker-text");
     this.gameProgressFill = document.getElementById("game-progress-fill");
     this.gameScoreNum = document.getElementById("game-score-num");
+    this.gameStreakPill = document.getElementById("game-streak-pill");
+    this.gameStreakFlame = document.getElementById("game-streak-flame");
+    this.gameStreakNum = document.getElementById("game-streak-num");
+
     this.detectAnimalImg = document.getElementById("detect-animal-img");
     this.detectAnimalName = document.getElementById("detect-animal-name");
     this.detectAnimalHint = document.getElementById("detect-animal-hint");
     this.gameWebcamContainer = document.getElementById("game-webcam-container");
     this.webcamFrameBox = document.getElementById("webcam-frame-box");
+    this.cardGuideOverlay = document.getElementById("card-guide-overlay");
     this.statusPill = document.getElementById("status-pill");
     this.statusPillEmoji = document.getElementById("status-pill-emoji");
     this.statusPillText = document.getElementById("status-pill-text");
     this.stabilityGaugeFill = document.getElementById("stability-gauge-fill");
 
-    // Simulation Strip
-    this.btnSimExtinct = document.getElementById("btn-sim-extinct");
-    this.btnSimEndangered = document.getElementById("btn-sim-endangered");
-    this.btnSimNothing = document.getElementById("btn-sim-nothing");
-
     // Feedback Correct (5)
+    this.correctStreakBanner = document.getElementById("correct-streak-banner");
+    this.correctStreakText = document.getElementById("correct-streak-text");
     this.correctAnnouncement = document.getElementById("correct-announcement");
     this.correctAnimalImg = document.getElementById("correct-animal-img");
     this.correctStatusLabel = document.getElementById("correct-status-label");
     this.correctStatusDesc = document.getElementById("correct-status-desc");
+    this.correctCountdownNum = document.getElementById("correct-countdown-num");
+    this.correctTimerFill = document.getElementById("correct-timer-fill");
     this.btnNextFromCorrect = document.getElementById("btn-next-from-correct");
 
     // Feedback Wrong (6)
@@ -499,10 +524,13 @@ class ExhibitionApp {
     this.wrongAnimalImg = document.getElementById("wrong-animal-img");
     this.wrongStatusLabel = document.getElementById("wrong-status-label");
     this.wrongStatusDesc = document.getElementById("wrong-status-desc");
+    this.wrongCountdownNum = document.getElementById("wrong-countdown-num");
+    this.wrongTimerFill = document.getElementById("wrong-timer-fill");
     this.btnNextFromWrong = document.getElementById("btn-next-from-wrong");
 
     // Results (7)
     this.finalScorePill = document.getElementById("final-score-pill");
+    this.finalStreakPill = document.getElementById("final-streak-pill");
     this.shelfGoneList = document.getElementById("shelf-gone-list");
     this.shelfStillList = document.getElementById("shelf-still-list");
     this.btnResultPlayAgain = document.getElementById("btn-result-play-again");
@@ -575,15 +603,17 @@ class ExhibitionApp {
       this.startGame();
     });
 
-    // Screen 5 -> Next Question
+    // Screen 5 -> Next Question (Manual Skip)
     this.btnNextFromCorrect.addEventListener("click", () => {
       soundFX.playClick();
+      this.clearAutoAdvanceTimer();
       this.advanceQuestion();
     });
 
-    // Screen 6 -> Next Question
+    // Screen 6 -> Next Question (Manual Skip)
     this.btnNextFromWrong.addEventListener("click", () => {
       soundFX.playClick();
+      this.clearAutoAdvanceTimer();
       this.advanceQuestion();
     });
 
@@ -604,25 +634,7 @@ class ExhibitionApp {
       this.startGame();
     });
 
-    // Simulation Controls (Tactile card testing)
-    this.btnSimExtinct.addEventListener("mousedown", () => {
-      soundFX.playCardPlace();
-      this.simulate("EXTINCT");
-    });
-    this.btnSimExtinct.addEventListener("mouseup", () => this.simulate("NOTHING"));
-
-    this.btnSimEndangered.addEventListener("mousedown", () => {
-      soundFX.playCardPlace();
-      this.simulate("ENDANGERED");
-    });
-    this.btnSimEndangered.addEventListener("mouseup", () => this.simulate("NOTHING"));
-
-    this.btnSimNothing.addEventListener("click", () => {
-      soundFX.playClick();
-      this.simulate("NOTHING");
-    });
-
-    // Keyboard Shortcuts (1 = Extinct, 2 = Endangered, 0 = Nothing)
+    // Keyboard Shortcuts for Testing / Staff (1 = Extinct, 2 = Endangered, 0 = Nothing)
     window.addEventListener("keydown", (e) => {
       if (e.key === "1") {
         if (!this.simulatedCard || this.simulatedCard === "NOTHING") soundFX.playCardPlace();
@@ -668,12 +680,28 @@ class ExhibitionApp {
    * Generates a new randomized set of 8 animals (4 extinct + 4 endangered)
    */
   startGame() {
+    this.clearAutoAdvanceTimer();
     this.questions = generateGameQuestions(8);
     this.currentIndex = 0;
     this.score = 0;
+    this.currentStreak = 0;
+    this.updateStreakUI();
     this.gameScoreNum.textContent = "0";
     this.renderCurrentQuestion();
     this.switchScreen("game");
+  }
+
+  updateStreakUI() {
+    if (this.gameStreakNum) {
+      this.gameStreakNum.textContent = String(this.currentStreak);
+    }
+    if (this.gameStreakPill) {
+      if (this.currentStreak >= 3) {
+        this.gameStreakPill.classList.add("on-fire");
+      } else {
+        this.gameStreakPill.classList.remove("on-fire");
+      }
+    }
   }
 
   renderCurrentQuestion() {
@@ -694,19 +722,27 @@ class ExhibitionApp {
     this.candidateClass = "NOTHING";
     this.candidateStartTime = 0;
     this.updateStability(0);
-    this.setDetectorStatus("👀", "Let me see...");
+
+    // Inter-question Grace Period (Allows standing visitor to lower/swap their card)
+    this.isGracePeriodActive = true;
+    this.setDetectorStatus("👋", "Lower card for next round...");
+
+    setTimeout(() => {
+      this.isGracePeriodActive = false;
+      this.setDetectorStatus("👀", "Hold up your answer board!");
+    }, 1200);
   }
 
   // ========================================================================
-  // WEBCAM INITIALIZATION
+  // WEBCAM INITIALIZATION (ENLARGED HIGH-RES FEED FOR MUSEUM KIOSK)
   // ========================================================================
   async initWebcam() {
     if (this.isWebcamActive) return;
 
     try {
       const flip = true;
-      const width = 320;
-      const height = 320;
+      const width = 440;
+      const height = 440;
 
       if (window.tmImage && window.tmImage.Webcam) {
         this.webcam = new window.tmImage.Webcam(width, height, flip);
@@ -716,7 +752,7 @@ class ExhibitionApp {
         this.gameWebcamContainer.appendChild(this.webcam.canvas);
       } else {
         const stream = await navigator.mediaDevices.getUserMedia({
-          video: { width: 320, height: 320, facingMode: "user" }
+          video: { width: 440, height: 440, facingMode: "user" }
         });
         const video = document.createElement("video");
         video.srcObject = stream;
@@ -731,7 +767,7 @@ class ExhibitionApp {
       window.requestAnimationFrame(() => this.loop());
     } catch (err) {
       console.warn("Webcam not available:", err);
-      // Run loop anyway so simulation buttons work
+      // Run loop anyway so simulation / keyboard works
       window.requestAnimationFrame(() => this.loop());
     }
   }
@@ -762,6 +798,11 @@ class ExhibitionApp {
 
   async processDetection() {
     if (this.currentScreen !== "game" || this.isRecognitionLocked) {
+      return;
+    }
+
+    // Ignore detection while the user is lowering card from previous round
+    if (this.isGracePeriodActive) {
       return;
     }
 
@@ -799,14 +840,21 @@ class ExhibitionApp {
       this.candidateClass = "NOTHING";
       this.candidateStartTime = 0;
       this.updateStability(0);
-      this.setDetectorStatus("👀", "Let me see...");
+      this.setDetectorStatus("👀", "Hold up your card...");
+      if (this.cardGuideOverlay) {
+        this.cardGuideOverlay.classList.remove("card-detected");
+      }
       return;
     }
 
-    // Temporal stability
+    // Card is held in front of camera
+    if (this.cardGuideOverlay) {
+      this.cardGuideOverlay.classList.add("card-detected");
+    }
+
+    // Temporal stability (450ms continuous hold)
     const now = performance.now();
     if (this.candidateClass !== topClass) {
-      // New card detected! Play subtle card place sound
       soundFX.playCardPlace();
       this.candidateClass = topClass;
       this.candidateStartTime = now;
@@ -834,13 +882,38 @@ class ExhibitionApp {
 
     if (isCorrect) {
       this.score += 1;
+      this.currentStreak += 1;
+      if (this.currentStreak > this.bestStreak) {
+        this.bestStreak = this.currentStreak;
+      }
       this.gameScoreNum.textContent = String(this.score);
+      this.updateStreakUI();
+
       soundFX.playCorrect();
+
+      // Fire Streak Announcement (3+ in a row)
+      if (this.currentStreak >= 3) {
+        soundFX.playStreak();
+        if (this.correctStreakBanner) {
+          this.correctStreakBanner.style.display = "inline-flex";
+          if (this.correctStreakText) {
+            this.correctStreakText.innerHTML = `<strong>${this.currentStreak} IN A ROW!</strong> YOU'RE ON FIRE!`;
+          }
+        }
+      } else {
+        if (this.correctStreakBanner) {
+          this.correctStreakBanner.style.display = "none";
+        }
+      }
 
       // Trigger Wireframe 5 (Correct Answer Screen)
       this.showCorrectScreen(q);
       this.triggerConfetti();
     } else {
+      // Extinguish streak
+      this.currentStreak = 0;
+      this.updateStreakUI();
+
       soundFX.playWrong();
       // Trigger Wireframe 6 (Wrong Answer Screen)
       this.showWrongScreen(q);
@@ -858,6 +931,9 @@ class ExhibitionApp {
     this.correctStatusDesc.textContent = q.fact;
 
     this.switchScreen("feedbackCorrect");
+
+    // Start hands-free countdown for standing visitors
+    this.startAutoAdvanceTimer("correct");
   }
 
   showWrongScreen(q) {
@@ -871,9 +947,57 @@ class ExhibitionApp {
     this.wrongStatusDesc.textContent = q.fact;
 
     this.switchScreen("feedbackWrong");
+
+    // Start hands-free countdown for standing visitors
+    this.startAutoAdvanceTimer("wrong");
+  }
+
+  /**
+   * Hands-Free Auto-Advance Countdown Timer:
+   * Smoothly counts down 3.5 seconds so visitors standing with boards
+   * do not need to reach for a mouse or screen!
+   */
+  startAutoAdvanceTimer(type) {
+    this.clearAutoAdvanceTimer();
+    const durationMs = 3600;
+    const numEl = type === "correct" ? this.correctCountdownNum : this.wrongCountdownNum;
+    const fillEl = type === "correct" ? this.correctTimerFill : this.wrongTimerFill;
+
+    if (numEl) numEl.textContent = "3";
+    if (fillEl) {
+      fillEl.style.transition = "none";
+      fillEl.style.width = "100%";
+      void fillEl.offsetWidth; // Force CSS repaint
+      fillEl.style.transition = `width ${durationMs}ms linear`;
+      fillEl.style.width = "0%";
+    }
+
+    const start = performance.now();
+    this.autoAdvanceInterval = setInterval(() => {
+      const elapsed = performance.now() - start;
+      const remainingSec = Math.max(0, Math.ceil((durationMs - elapsed) / 1000));
+      if (numEl) numEl.textContent = String(remainingSec);
+    }, 150);
+
+    this.autoAdvanceTimer = setTimeout(() => {
+      this.clearAutoAdvanceTimer();
+      this.advanceQuestion();
+    }, durationMs);
+  }
+
+  clearAutoAdvanceTimer() {
+    if (this.autoAdvanceTimer) {
+      clearTimeout(this.autoAdvanceTimer);
+      this.autoAdvanceTimer = null;
+    }
+    if (this.autoAdvanceInterval) {
+      clearInterval(this.autoAdvanceInterval);
+      this.autoAdvanceInterval = null;
+    }
   }
 
   advanceQuestion() {
+    this.clearAutoAdvanceTimer();
     this.currentIndex++;
     if (this.currentIndex >= this.questions.length) {
       this.showResultScreen();
@@ -884,7 +1008,11 @@ class ExhibitionApp {
   }
 
   showResultScreen() {
+    this.clearAutoAdvanceTimer();
     this.finalScorePill.textContent = `${this.score} / ${this.questions.length}`;
+    if (this.finalStreakPill) {
+      this.finalStreakPill.innerHTML = `🔥 Best Streak: <strong>${this.bestStreak}</strong> in a row!`;
+    }
     this.populateShelves();
     this.switchScreen("result");
     this.triggerConfetti();

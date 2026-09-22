@@ -234,11 +234,19 @@
             <span class="round-text" id="round-tracker-text">Round 1 / 8</span>
           </div>
 
-          <!-- Score Badge & Sound Pill -->
+          <!-- Score Badge, Streak & Sound Pill -->
           <div class="header-right-controls">
             <button class="sound-pill-toggle" id="btn-sound-toggle-game" type="button" title="Toggle Sound">
               <span class="sound-icon" id="game-sound-icon">🔊</span>
             </button>
+
+            <!-- Snapchat-style Consecutive Streak Counter -->
+            <div class="streak-pill-flame" id="game-streak-pill" title="Consecutive correct answers">
+              <span class="flame-icon" id="game-streak-flame">🔥</span>
+              <span class="streak-label">Streak:</span>
+              <strong id="game-streak-num">0</strong>
+            </div>
+
             <div class="score-pill-star">
               <span class="star-icon">⭐</span>
               <span class="score-label">Score:</span>
@@ -287,9 +295,15 @@
               <span class="curved-arrow">⤷</span>
             </div>
 
-            <!-- Camera Viewfinder Box with Pink Border -->
+            <!-- Camera Viewfinder Box (Enlarged for Standing Museum Visitors) -->
             <div class="webcam-pink-frame" id="webcam-frame-box">
               <div id="game-webcam-container" class="webcam-inner-viewport"></div>
+              <div class="card-hold-guide-overlay" id="card-guide-overlay">
+                <div class="card-outline-dashed">
+                  <span class="guide-card-icon">🪪</span>
+                  <span class="guide-card-label">HOLD BOARD HERE</span>
+                </div>
+              </div>
               <div class="scan-laser-line"></div>
             </div>
 
@@ -302,14 +316,6 @@
             <!-- Stability Progress Meter (450ms gate) -->
             <div class="stability-gauge-track">
               <div class="stability-gauge-fill" id="stability-gauge-fill"></div>
-            </div>
-
-            <!-- Instant Test / Simulation Bar (Zero blocker) -->
-            <div class="hud-sim-strip">
-              <span class="sim-label">SIMULATE:</span>
-              <button id="btn-sim-extinct" class="btn-sim sim-extinct" title="Press 1">EXTINCT (1)</button>
-              <button id="btn-sim-endangered" class="btn-sim sim-endangered" title="Press 2">STILL HERE (2)</button>
-              <button id="btn-sim-nothing" class="btn-sim sim-nothing" title="Press 0">REMOVE (0)</button>
             </div>
 
           </div>
@@ -330,6 +336,13 @@
           <span class="deco-star">✦</span>
           <span>YES!</span>
           <span class="deco-star">✦</span>
+        </div>
+
+        <!-- Streak Fire Announcement (Visible when streak >= 3) -->
+        <div class="streak-fire-banner" id="correct-streak-banner" style="display: none;">
+          <span class="flame-bounce">🔥</span>
+          <span id="correct-streak-text"><strong>3 IN A ROW!</strong> YOU'RE ON FIRE!</span>
+          <span class="flame-bounce">🔥</span>
         </div>
 
         <h2 class="feedback-announcement" id="correct-announcement">
@@ -354,6 +367,17 @@
           <p class="status-desc" id="correct-status-desc">
             Komodo dragons are still alive, but they face threats from habitat loss and climate change.
           </p>
+        </div>
+
+        <!-- Hands-Free Auto-Advance Timer for Standing Players -->
+        <div class="feedback-auto-timer">
+          <div class="timer-badge-pill">
+            <span class="timer-sand-icon">⏳</span>
+            <span>Next animal in <strong id="correct-countdown-num">3</strong>s</span>
+          </div>
+          <div class="timer-bar-track">
+            <div class="timer-bar-fill" id="correct-timer-fill"></div>
+          </div>
         </div>
 
         <button id="btn-next-from-correct" class="btn-primary-coral btn-bounce" type="button">
@@ -401,6 +425,17 @@
           </p>
         </div>
 
+        <!-- Hands-Free Auto-Advance Timer for Standing Players -->
+        <div class="feedback-auto-timer">
+          <div class="timer-badge-pill">
+            <span class="timer-sand-icon">⏳</span>
+            <span>Next animal in <strong id="wrong-countdown-num">3</strong>s</span>
+          </div>
+          <div class="timer-bar-track">
+            <div class="timer-bar-fill" id="wrong-timer-fill"></div>
+          </div>
+        </div>
+
         <button id="btn-next-from-wrong" class="btn-primary-coral btn-bounce" type="button">
           <span>Next Animal</span>
           <span class="btn-arrow">➔</span>
@@ -421,6 +456,7 @@
           
           <div class="score-display-wrapper">
             <div class="score-pill-big" id="final-score-pill">6 / 8</div>
+            <div class="streak-pill-big" id="final-streak-pill">🔥 Best Streak: <strong>0</strong> in a row!</div>
             <div class="badge-knowledge-purple">YOU KNOW YOUR WILDLIFE!</div>
           </div>
         </header>
