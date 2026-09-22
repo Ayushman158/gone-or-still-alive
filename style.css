@@ -307,13 +307,13 @@ html, body {
 
 .home-container {
   width: 100%;
-  max-width: 1280px;
+  max-width: 1220px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 350px 1fr 350px;
+  grid-template-columns: 290px 1fr 290px;
   align-items: center;
-  gap: 20px;
-  padding: 20px 0 40px;
+  gap: 28px;
+  padding: 30px 0 40px;
 }
 
 .home-hero-side {
@@ -323,38 +323,49 @@ html, body {
   position: relative;
 }
 
-.hero-animal-wrapper {
+.hero-card-frame {
+  width: 270px;
+  max-width: 100%;
+  border-radius: 28px;
+  background: #FFFFFF;
+  border: 4px solid var(--border-color);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12), 0 4px 0 var(--border-color);
+  padding: 8px;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  user-select: none;
+}
+
+.hero-card-frame:hover {
+  transform: translateY(-8px) scale(1.04) !important;
+  box-shadow: 0 24px 44px rgba(0, 0, 0, 0.16), 0 6px 0 var(--border-color);
+}
+
+.card-tilt-left {
+  transform: rotate(-3.5deg);
+  animation: cardFloatLeft 4s ease-in-out infinite alternate;
+}
+
+.card-tilt-right {
+  transform: rotate(3.5deg);
+  animation: cardFloatRight 4s ease-in-out infinite alternate 1.8s;
+}
+
+@keyframes cardFloatLeft {
+  0% { transform: translateY(0) rotate(-3.5deg); }
+  100% { transform: translateY(-10px) rotate(-1.5deg); }
+}
+
+@keyframes cardFloatRight {
+  0% { transform: translateY(0) rotate(3.5deg); }
+  100% { transform: translateY(-10px) rotate(5.5deg); }
+}
+
+.hero-card-img {
   width: 100%;
-  height: clamp(320px, 44vh, 440px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.hero-animal-img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.12));
-  transition: transform 0.3s ease;
-}
-
-.home-hero-mammoth {
-  animation: mammothFloat 4s ease-in-out infinite alternate;
-}
-
-.home-hero-tiger {
-  animation: tigerFloat 4s ease-in-out infinite alternate 1.8s;
-}
-
-@keyframes mammothFloat {
-  0% { transform: translateY(0) scale(1); }
-  100% { transform: translateY(-10px) scale(1.02); }
-}
-
-@keyframes tigerFloat {
-  0% { transform: translateY(0) scale(1); }
-  100% { transform: translateY(-10px) scale(1.02); }
+  height: auto;
+  display: block;
+  border-radius: 20px;
 }
 
 /* Speech Bubbles */
@@ -514,6 +525,8 @@ html, body {
   max-width: 90%;
   max-height: 90%;
   object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .step-cards-showcase {
@@ -1503,7 +1516,22 @@ html, body {
 
 @media (max-width: 900px) {
   .home-container {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+  }
+  .home-hero-center {
+    order: 1;
+  }
+  .home-hero-side.side-left {
+    order: 2;
+  }
+  .home-hero-side.side-right {
+    order: 3;
+  }
+  .hero-card-frame {
+    width: 240px;
   }
   .game-main-stage {
     grid-template-columns: 1fr;
