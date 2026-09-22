@@ -37,23 +37,18 @@
   <!-- APP CONTAINER -->
   <div id="app" class="app-viewport">
 
-    <!-- GLOBAL NAVBAR (Visible on Home and About screens) -->
+    <!-- GLOBAL NAVBAR (Clean Brand & Sound Toggle) -->
     <nav class="global-navbar" id="global-navbar">
       <div class="nav-brand" id="nav-brand-logo">
         <span class="brand-text-gone">GONE</span>
         <span class="brand-pill-or">OR</span>
         <span class="brand-text-still">STILL HERE?</span>
       </div>
-      <div class="nav-links">
-        <button class="nav-link" id="nav-link-about" type="button">About</button>
-        <button class="nav-link" id="nav-link-game" type="button">The Game</button>
-        <button class="nav-link" id="nav-link-animals" type="button">Animals</button>
-        <button class="nav-link" id="nav-link-planet" type="button">Our Planet</button>
+      <div class="nav-controls">
         <button class="nav-sound-btn" id="btn-sound-toggle-nav" type="button" title="Toggle Sound">
           <span class="sound-icon" id="nav-sound-icon">🔊</span>
           <span class="sound-text" id="nav-sound-text">Sound</span>
         </button>
-        <span class="nav-paw" title="Wildlife Conservation">🐾</span>
       </div>
     </nav>
 
@@ -69,7 +64,7 @@
             <span>SOME ARE GONE...</span>
           </div>
           <div class="hero-animal-wrapper">
-            <img src="assets/animals/mammoth.svg" alt="Woolly Mammoth" class="hero-animal-img">
+            <img src="assets/animals/home-mammoth.png" alt="Woolly Mammoth" class="hero-animal-img home-hero-mammoth">
           </div>
         </div>
 
@@ -107,7 +102,7 @@
             <span>...BUT MANY ARE STILL HERE!</span>
           </div>
           <div class="hero-animal-wrapper">
-            <img src="assets/animals/tiger.svg" alt="Bengal Tiger" class="hero-animal-img">
+            <img src="assets/animals/home-tiger.png" alt="Bengal Tiger" class="hero-animal-img home-hero-tiger">
           </div>
         </div>
 
@@ -497,79 +492,10 @@
 
         <!-- Result Action Buttons -->
         <div class="result-action-row">
-          <button id="btn-result-play-again" class="btn-primary-blue" type="button">
+          <button id="btn-result-play-again" class="btn-primary-blue btn-bounce" type="button">
             <span>▶ PLAY AGAIN</span>
             <span class="btn-arrow">➔</span>
           </button>
-          <button id="btn-result-explore" class="btn-secondary-white" type="button">
-            EXPLORE THE EXHIBITION
-          </button>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ====================================================================
-         SCREEN 8: ABOUT / CONSERVATION (Wireframe 8)
-         ==================================================================== -->
-    <section id="screen-about" class="screen-view">
-      <div class="about-layout-wireframe">
-        
-        <!-- Left Column: Mission Copy & 3 Pillars -->
-        <div class="about-left-col">
-          <h2 class="about-headline">
-            SMALL CHOICES<br>
-            MAKE A BIG DIFFERENCE
-          </h2>
-          <p class="about-intro">
-            Every animal plays a role in our planet's story. By learning about them, we can help protect the ones that are still here.
-          </p>
-
-          <!-- 3 Pillars -->
-          <div class="pillars-list">
-            <!-- Learn -->
-            <div class="pillar-card">
-              <div class="pillar-icon-circle icon-green">🌱</div>
-              <div class="pillar-text">
-                <div class="pillar-title">LEARN</div>
-                <div class="pillar-sub">About wildlife</div>
-              </div>
-            </div>
-
-            <!-- Care -->
-            <div class="pillar-card">
-              <div class="pillar-icon-circle icon-pink">❤️</div>
-              <div class="pillar-text">
-                <div class="pillar-title">CARE</div>
-                <div class="pillar-sub">For their habitats</div>
-              </div>
-            </div>
-
-            <!-- Conserve -->
-            <div class="pillar-card">
-              <div class="pillar-icon-circle icon-blue">🌐</div>
-              <div class="pillar-text">
-                <div class="pillar-title">CONSERVE</div>
-                <div class="pillar-sub">For a brighter tomorrow</div>
-              </div>
-            </div>
-          </div>
-
-          <button id="btn-about-back" class="btn-primary-coral" type="button">
-            <span>START THE GAME</span>
-            <span class="btn-arrow">➔</span>
-          </button>
-        </div>
-
-        <!-- Right Column: Earth Illustration & Badge -->
-        <div class="about-right-col">
-          <div class="earth-badge-wrapper">
-            <img src="assets/ui/earth-illustration.svg" alt="Planet Earth" class="earth-hero-img">
-            <div class="speech-badge-blue badge-earth">
-              <span class="badge-heart">💖</span>
-              <span>A BRIGHTER TOMORROW IS WILDLIFE TOGETHER</span>
-            </div>
-          </div>
         </div>
 
       </div>

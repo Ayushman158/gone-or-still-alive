@@ -465,17 +465,12 @@ class ExhibitionApp {
       game: document.getElementById("screen-game"),
       feedbackCorrect: document.getElementById("screen-feedback-correct"),
       feedbackWrong: document.getElementById("screen-feedback-wrong"),
-      result: document.getElementById("screen-result"),
-      about: document.getElementById("screen-about")
+      result: document.getElementById("screen-result")
     };
 
     // Navigation & Global
     this.globalNavbar = document.getElementById("global-navbar");
     this.navBrandLogo = document.getElementById("nav-brand-logo");
-    this.navLinkAbout = document.getElementById("nav-link-about");
-    this.navLinkGame = document.getElementById("nav-link-game");
-    this.navLinkAnimals = document.getElementById("nav-link-animals");
-    this.navLinkPlanet = document.getElementById("nav-link-planet");
     this.btnSoundToggleNav = document.getElementById("btn-sound-toggle-nav");
     this.btnSoundToggleGame = document.getElementById("btn-sound-toggle-game");
 
@@ -534,10 +529,6 @@ class ExhibitionApp {
     this.shelfGoneList = document.getElementById("shelf-gone-list");
     this.shelfStillList = document.getElementById("shelf-still-list");
     this.btnResultPlayAgain = document.getElementById("btn-result-play-again");
-    this.btnResultExplore = document.getElementById("btn-result-explore");
-
-    // About (8)
-    this.btnAboutBack = document.getElementById("btn-about-back");
 
     // Confetti Canvas
     this.confettiCanvas = document.getElementById("confetti-canvas");
@@ -552,28 +543,13 @@ class ExhibitionApp {
       this.btnSoundToggleGame.addEventListener("click", () => soundFX.toggleMute());
     }
 
-    // Navbar Navigation
-    this.navBrandLogo.addEventListener("click", () => {
-      soundFX.playClick();
-      this.switchScreen("home");
-    });
-    this.navLinkAbout.addEventListener("click", () => {
-      soundFX.playClick();
-      this.switchScreen("about");
-    });
-    this.navLinkGame.addEventListener("click", () => {
-      soundFX.playClick();
-      this.switchScreen("howToPlay");
-    });
-    this.navLinkPlanet.addEventListener("click", () => {
-      soundFX.playClick();
-      this.switchScreen("about");
-    });
-    this.navLinkAnimals.addEventListener("click", () => {
-      soundFX.playClick();
-      this.populateShelves();
-      this.switchScreen("result");
-    });
+    // Navbar Brand Click -> Return to Home
+    if (this.navBrandLogo) {
+      this.navBrandLogo.addEventListener("click", () => {
+        soundFX.playClick();
+        this.switchScreen("home");
+      });
+    }
 
     // Screen 1 -> Screen 2
     this.btnHomePlay.addEventListener("click", () => {
@@ -617,22 +593,13 @@ class ExhibitionApp {
       this.advanceQuestion();
     });
 
-    // Screen 7 (Result) actions
-    this.btnResultPlayAgain.addEventListener("click", () => {
-      soundFX.playStart();
-      this.startGame();
-    });
-
-    this.btnResultExplore.addEventListener("click", () => {
-      soundFX.playClick();
-      this.switchScreen("about");
-    });
-
-    // Screen 8 (About) -> Game
-    this.btnAboutBack.addEventListener("click", () => {
-      soundFX.playStart();
-      this.startGame();
-    });
+    // Screen 7 (Result) actions -> Play Again
+    if (this.btnResultPlayAgain) {
+      this.btnResultPlayAgain.addEventListener("click", () => {
+        soundFX.playStart();
+        this.startGame();
+      });
+    }
 
     // Keyboard Shortcuts for Testing / Staff (1 = Extinct, 2 = Endangered, 0 = Nothing)
     window.addEventListener("keydown", (e) => {
@@ -667,8 +634,8 @@ class ExhibitionApp {
       this.screens[screenKey].classList.add("active");
     }
 
-    // Toggle navbar visibility (only visible on Home and About)
-    if (screenKey === "home" || screenKey === "about") {
+    // Toggle navbar visibility (only visible on Home)
+    if (screenKey === "home") {
       this.globalNavbar.style.display = "flex";
     } else {
       this.globalNavbar.style.display = "none";
