@@ -148,29 +148,25 @@ html, body {
    GLOBAL TOP NAVBAR (Screens 1 & 8)
    ========================================================================== */
 
-.global-navbar {
-  width: 100%;
-  max-width: 1220px;
-  margin: 16px auto 0;
-  padding: 8px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  z-index: 50;
-}
-
-.nav-brand {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+/* Floating Sound Toggle on Home Screen */
+.floating-sound-toggle {
+  position: absolute;
+  top: 24px;
+  right: 28px;
+  background: #FFFFFF;
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-full);
+  padding: 8px 14px;
+  font-size: 1.25rem;
+  box-shadow: var(--shadow-pop-sm);
   cursor: pointer;
+  z-index: 100;
+  transition: transform 0.15s, box-shadow 0.15s;
 }
 
-.brand-text-gone, .brand-text-still {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  font-weight: 800;
-  color: var(--border-color);
+.floating-sound-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 0 var(--border-color);
 }
 
 .brand-pill-or, .logo-or, .badge-or-inline {
@@ -183,37 +179,6 @@ html, body {
   border-radius: var(--radius-full);
   border: 2px solid var(--border-color);
   box-shadow: 0 2px 0 var(--border-color);
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-}
-
-.nav-link {
-  background: none;
-  border: none;
-  font-family: var(--font-display);
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--border-color);
-  cursor: pointer;
-  padding: 6px 14px;
-  border-radius: var(--radius-full);
-  transition: background 0.15s, transform 0.15s;
-}
-
-.nav-link:hover, .nav-link.active {
-  background: #FFFFFF;
-  box-shadow: var(--shadow-pop-sm);
-  border: 2px solid var(--border-color);
-  transform: translateY(-2px);
-}
-
-.nav-paw {
-  font-size: 1.3rem;
-  margin-left: 6px;
 }
 
 /* ==========================================================================

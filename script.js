@@ -468,9 +468,7 @@ class ExhibitionApp {
       result: document.getElementById("screen-result")
     };
 
-    // Navigation & Global
-    this.globalNavbar = document.getElementById("global-navbar");
-    this.navBrandLogo = document.getElementById("nav-brand-logo");
+    // Global Controls
     this.btnSoundToggleNav = document.getElementById("btn-sound-toggle-nav");
     this.btnSoundToggleGame = document.getElementById("btn-sound-toggle-game");
 
@@ -541,14 +539,6 @@ class ExhibitionApp {
     }
     if (this.btnSoundToggleGame) {
       this.btnSoundToggleGame.addEventListener("click", () => soundFX.toggleMute());
-    }
-
-    // Navbar Brand Click -> Return to Home
-    if (this.navBrandLogo) {
-      this.navBrandLogo.addEventListener("click", () => {
-        soundFX.playClick();
-        this.switchScreen("home");
-      });
     }
 
     // Screen 1 -> Screen 2
@@ -632,13 +622,6 @@ class ExhibitionApp {
 
     if (this.screens[screenKey]) {
       this.screens[screenKey].classList.add("active");
-    }
-
-    // Toggle navbar visibility (only visible on Home)
-    if (screenKey === "home") {
-      this.globalNavbar.style.display = "flex";
-    } else {
-      this.globalNavbar.style.display = "none";
     }
   }
 
