@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgElephant" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E8F5E9"/>
+      <stop offset="100%" stop-color="#C8E6C9"/>
+    </linearGradient>
+    <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#90A4AE"/>
+      <stop offset="100%" stop-color="#607D8B"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="320" rx="30" fill="url(#bgElephant)"/>
+  <!-- Jungle leaves in background -->
+  <path d="M30 40 C60 10 100 30 110 70 C80 80 40 70 30 40 Z" fill="#81C784" opacity="0.7"/>
+  <path d="M330 30 C370 20 390 60 370 90 C340 85 320 60 330 30 Z" fill="#81C784" opacity="0.7"/>
+
+  <!-- Back Legs -->
+  <rect x="140" y="180" width="36" height="95" rx="18" fill="#546E7A"/>
+  <rect x="250" y="180" width="36" height="95" rx="18" fill="#546E7A"/>
+
+  <!-- Large Body -->
+  <ellipse cx="210" cy="180" rx="95" ry="75" fill="url(#skinGrad)"/>
+
+  <!-- Front Legs -->
+  <rect x="160" y="185" width="40" height="95" rx="20" fill="#78909C"/>
+  <rect x="230" y="185" width="40" height="95" rx="20" fill="#78909C"/>
+  <!-- Toenails -->
+  <circle cx="168" cy="275" r="5" fill="#ECEFF1"/>
+  <circle cx="180" cy="275" r="5" fill="#ECEFF1"/>
+  <circle cx="192" cy="275" r="5" fill="#ECEFF1"/>
+
+  <!-- Head -->
+  <ellipse cx="120" cy="140" rx="50" ry="50" fill="url(#skinGrad)"/>
+  <!-- Two domed bumps on head (distinct Asian elephant trait) -->
+  <circle cx="105" cy="100" r="18" fill="#78909C"/>
+  <circle cx="130" cy="100" r="18" fill="#78909C"/>
+
+  <!-- Distinct Asian elephant smaller ear with pink interior -->
+  <path d="M150 110 C185 110 195 160 165 175 C145 185 135 150 145 115 Z" fill="#78909C"/>
+  <path d="M152 120 C175 120 182 155 160 165 C145 172 142 145 150 125 Z" fill="#FFCDD2"/>
+
+  <!-- Eye with kind expression -->
+  <circle cx="108" cy="130" r="6" fill="#263238"/>
+  <circle cx="106" cy="128" r="2" fill="#FFFFFF"/>
+
+  <!-- Small Tusk -->
+  <path d="M102 175 C95 190 100 200 115 195 C120 180 115 175 102 175 Z" fill="#FFFDF7"/>
+
+  <!-- Playful Upcurled Trunk -->
+  <path d="M95 150 C70 170 50 190 60 215 C70 235 100 230 95 210 C90 195 85 170 105 160" fill="none" stroke="#78909C" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Cute water droplets from trunk -->
+  <circle cx="45" cy="190" r="4" fill="#4FC3F7"/>
+  <circle cx="35" cy="205" r="5" fill="#4FC3F7"/>
+  <circle cx="40" cy="225" r="3" fill="#4FC3F7"/>
+
+  <!-- Tail -->
+  <path d="M305 165 Q320 190 315 220" fill="none" stroke="#546E7A" stroke-width="5" stroke-linecap="round"/>
+</svg>

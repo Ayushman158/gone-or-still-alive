@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgSmilodon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF8E1"/>
+      <stop offset="100%" stop-color="#FFECB3"/>
+    </linearGradient>
+    <linearGradient id="smilodonCoat" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFA726"/>
+      <stop offset="100%" stop-color="#E65100"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="320" rx="30" fill="url(#bgSmilodon)"/>
+  <!-- Prehistoric grass & rocks -->
+  <ellipse cx="60" cy="270" rx="40" ry="15" fill="#BCAAA4" opacity="0.6"/>
+  <ellipse cx="320" cy="280" rx="50" ry="18" fill="#BCAAA4" opacity="0.6"/>
+
+  <!-- Back Legs -->
+  <rect x="230" y="180" width="30" height="90" rx="15" fill="#BF360C"/>
+  <rect x="280" y="185" width="28" height="85" rx="14" fill="#BF360C"/>
+
+  <!-- Muscular Body -->
+  <path d="M120 180 C110 130 160 120 220 125 C270 130 300 160 290 200 C270 230 180 235 120 180 Z" fill="url(#smilodonCoat)"/>
+
+  <!-- Front Powerful Legs -->
+  <rect x="130" y="170" width="36" height="105" rx="18" fill="#E65100"/>
+  <rect x="175" y="175" width="34" height="100" rx="17" fill="#FB8C00"/>
+
+  <!-- Powerful Neck & Head -->
+  <ellipse cx="110" cy="140" rx="48" ry="42" fill="url(#smilodonCoat)"/>
+  <!-- Ears -->
+  <polygon points="110,95 130,120 95,115" fill="#E65100"/>
+  <polygon points="125,95 145,120 115,118" fill="#FFB74D"/>
+
+  <!-- Muzzle -->
+  <ellipse cx="80" cy="155" rx="30" ry="25" fill="#FFF3E0"/>
+  <ellipse cx="65" cy="145" rx="8" ry="6" fill="#212121"/> <!-- Nose -->
+
+  <!-- Fierce yet friendly eye -->
+  <ellipse cx="98" cy="130" rx="8" ry="7" fill="#FFD54F"/>
+  <circle cx="98" cy="130" r="4" fill="#212121"/>
+  <circle cx="96" cy="128" r="1.5" fill="#FFFFFF"/>
+
+  <!-- Famous Saber Canines (Long Curved Daggers) -->
+  <path d="M72 155 C74 185 82 215 88 220 C87 215 80 185 84 158 Z" fill="#FFFFFF" stroke="#FFE082" stroke-width="1.5"/>
+  <path d="M60 155 C62 185 70 215 76 220 C75 215 68 185 72 158 Z" fill="#FFFDF7" stroke="#FFE082" stroke-width="1.5"/>
+
+  <!-- Short Bobbed Tail (Smilodon had a very short tail!) -->
+  <path d="M295 170 Q315 175 310 190" fill="none" stroke="#E65100" stroke-width="8" stroke-linecap="round"/>
+
+  <!-- Playful Spots/Stripes -->
+  <ellipse cx="180" cy="150" rx="6" ry="12" fill="#BF360C" opacity="0.6" transform="rotate(20 180 150)"/>
+  <ellipse cx="215" cy="155" rx="6" ry="14" fill="#BF360C" opacity="0.6" transform="rotate(25 215 155)"/>
+  <ellipse cx="250" cy="165" rx="6" ry="12" fill="#BF360C" opacity="0.6" transform="rotate(15 250 165)"/>
+</svg>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="100%" height="100%">
+  <defs>
+    <linearGradient id="oceanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60A5FA"/>
+      <stop offset="100%" stop-color="#3B82F6"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Big Ocean Circle -->
+  <circle cx="150" cy="150" r="110" fill="url(#oceanGrad)"/>
+
+  <!-- Continents (Curved playful landmasses) -->
+  <path d="M120 70 C140 65 170 80 180 100 C185 115 160 125 140 120 C125 115 110 90 120 70 Z" fill="#34D399"/>
+  <path d="M80 110 C100 105 110 130 95 150 C85 165 65 155 70 135 C72 120 75 115 80 110 Z" fill="#10B981"/>
+  <path d="M160 130 C190 125 210 150 205 175 C200 195 175 190 165 170 C155 150 150 135 160 130 Z" fill="#34D399"/>
+  <path d="M100 180 C125 175 150 200 145 225 C140 245 115 245 105 225 C95 205 90 185 100 180 Z" fill="#10B981"/>
+  <path d="M190 200 C215 195 230 215 220 230 C210 245 190 235 190 200 Z" fill="#34D399"/>
+
+  <!-- Atmosphere Glow/Reflection -->
+  <ellipse cx="120" cy="90" rx="35" ry="18" fill="#FFFFFF" opacity="0.25" transform="rotate(-30 120 90)"/>
+
+  <!-- Surrounding Foliage / Leaves -->
+  <path d="M30 150 C30 110 60 100 65 130 C70 160 40 170 30 150 Z" fill="#059669" transform="rotate(-20 50 140)"/>
+  <path d="M260 130 C275 100 245 80 235 110 C225 140 250 150 260 130 Z" fill="#10B981" transform="rotate(25 250 120)"/>
+  <path d="M230 220 C260 210 270 240 245 255 C220 270 215 240 230 220 Z" fill="#059669"/>
+</svg>

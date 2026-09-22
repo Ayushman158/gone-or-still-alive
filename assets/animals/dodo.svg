@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgDodo" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EDE7F6"/>
+      <stop offset="100%" stop-color="#D1C4E9"/>
+    </linearGradient>
+    <linearGradient id="dodoBody" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#9E9E9E"/>
+      <stop offset="100%" stop-color="#616161"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="320" rx="30" fill="url(#bgDodo)"/>
+  <!-- Tropical Island leaves -->
+  <path d="M50 40 C70 10 110 30 115 70 C85 75 55 60 50 40 Z" fill="#80CBC4" opacity="0.6"/>
+  <path d="M340 50 C370 30 390 70 370 100 C340 95 330 70 340 50 Z" fill="#80CBC4" opacity="0.6"/>
+
+  <!-- Yellow Feet -->
+  <path d="M175 220 L175 270 M175 270 L155 275 M175 270 L175 280 M175 270 L195 275" stroke="#FFA000" stroke-width="8" stroke-linecap="round"/>
+  <path d="M225 220 L225 270 M225 270 L205 275 M225 270 L225 280 M225 270 L245 275" stroke="#FFB300" stroke-width="8" stroke-linecap="round"/>
+
+  <!-- Plump Dodo Body -->
+  <ellipse cx="210" cy="180" rx="85" ry="65" fill="url(#dodoBody)"/>
+  <!-- Fluffy White Tail Plumes -->
+  <path d="M290 160 Q325 150 315 175 Q335 180 310 195" fill="none" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round"/>
+
+  <!-- Small Cute Wings -->
+  <path d="M190 165 C220 160 235 185 220 200 C195 205 180 185 190 165 Z" fill="#757575"/>
+
+  <!-- Curved Neck -->
+  <path d="M135 180 C130 130 145 100 130 85" fill="none" stroke="#757575" stroke-width="32" stroke-linecap="round"/>
+
+  <!-- Head -->
+  <circle cx="120" cy="85" r="28" fill="#9E9E9E"/>
+
+  <!-- Bare Grey/Blue Face Mask -->
+  <path d="M110 70 C130 70 135 95 110 100 Z" fill="#B0BEC5"/>
+
+  <!-- Big Curved Hooked Beak -->
+  <path d="M110 75 C80 75 55 90 50 115 C60 125 75 110 85 95 L110 95 Z" fill="#546E7A"/>
+  <!-- Beak Tip (Yellow/Black Hook) -->
+  <path d="M60 100 C50 105 45 118 52 125 C62 125 68 115 65 100 Z" fill="#FFC107"/>
+  <circle cx="53" cy="120" r="3" fill="#212121"/>
+
+  <!-- Quirky Friendly Eye -->
+  <circle cx="120" cy="80" r="6" fill="#FFFFFF"/>
+  <circle cx="120" cy="80" r="3.5" fill="#212121"/>
+  <circle cx="118" cy="78" r="1.5" fill="#FFFFFF"/>
+</svg>

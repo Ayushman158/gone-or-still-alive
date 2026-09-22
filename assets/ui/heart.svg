@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="currentColor">
+  <path d="M50 85 C46 82 15 58 15 36 C15 20 28 12 40 12 C47 12 50 17 50 17 C50 17 53 12 60 12 C72 12 85 20 85 36 C85 58 54 82 50 85 Z" />
+  <!-- ECG pulse line -->
+  <path d="M22 45 L36 45 L42 30 L48 60 L54 36 L60 50 L64 45 L78 45" fill="none" stroke="#FFFDF7" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+</svg>

@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gone or Still Here? — Museum Educational Web Game</title>
+
+  <!-- Google Fonts: Fredoka & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- TensorFlow.js, Teachable Machine Image Library & Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+  <!-- Background Decorative Shapes (Stars, Blobs, Footprints) -->
+  <div class="bg-decorations" aria-hidden="true">
+    <div class="deco-blob blob-yellow"></div>
+    <div class="deco-blob blob-lavender"></div>
+    <div class="deco-blob blob-mint"></div>
+    <div class="star-accent star-1">★</div>
+    <div class="star-accent star-2">✦</div>
+    <div class="star-accent star-3">★</div>
+    <div class="squiggle-accent squiggle-1">〰️</div>
+    <div class="squiggle-accent squiggle-2">〰️</div>
+  </div>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confetti-canvas" class="confetti-canvas"></canvas>
+
+  <!-- APP CONTAINER -->
+  <div id="app" class="app-viewport">
+
+    <!-- GLOBAL NAVBAR (Visible on Home and About screens) -->
+    <nav class="global-navbar" id="global-navbar">
+      <div class="nav-brand" id="nav-brand-logo">
+        <span class="brand-text-gone">GONE</span>
+        <span class="brand-pill-or">OR</span>
+        <span class="brand-text-still">STILL HERE?</span>
+      </div>
+      <div class="nav-links">
+        <button class="nav-link" id="nav-link-about" type="button">About</button>
+        <button class="nav-link" id="nav-link-game" type="button">The Game</button>
+        <button class="nav-link" id="nav-link-animals" type="button">Animals</button>
+        <button class="nav-link" id="nav-link-planet" type="button">Our Planet</button>
+        <button class="nav-sound-btn" id="btn-sound-toggle-nav" type="button" title="Toggle Sound">
+          <span class="sound-icon" id="nav-sound-icon">🔊</span>
+          <span class="sound-text" id="nav-sound-text">Sound</span>
+        </button>
+        <span class="nav-paw" title="Wildlife Conservation">🐾</span>
+      </div>
+    </nav>
+
+    <!-- ====================================================================
+         SCREEN 1: HOME / LANDING SCREEN (Wireframe 1)
+         ==================================================================== -->
+    <section id="screen-home" class="screen-view active">
+      <div class="home-container">
+        
+        <!-- Left Column: Woolly Mammoth -->
+        <div class="home-hero-side side-left">
+          <div class="speech-bubble bubble-yellow bubble-left">
+            <span>SOME ARE GONE...</span>
+          </div>
+          <div class="hero-animal-wrapper">
+            <img src="assets/animals/mammoth.svg" alt="Woolly Mammoth" class="hero-animal-img">
+          </div>
+        </div>
+
+        <!-- Center Column: Title & CTA -->
+        <div class="home-hero-center">
+          <h1 class="landing-main-title">
+            GONE <span class="badge-or-inline">OR</span><br>
+            STILL HERE?
+          </h1>
+          <p class="landing-subtitle">
+            Can you tell which animals are gone and which still need our help?
+          </p>
+
+          <button id="btn-home-play" class="btn-primary-coral btn-bounce" type="button">
+            <span>LET'S PLAY!</span>
+            <span class="btn-arrow">➔</span>
+          </button>
+
+          <!-- 3 Pagination Dots -->
+          <div class="pagination-dots" aria-hidden="true">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+
+          <!-- Bottom Tagline -->
+          <div class="conservation-slogan">
+            EXTINCT ➔ ENDANGERED ➔ CONSERVE
+          </div>
+        </div>
+
+        <!-- Right Column: Bengal Tiger -->
+        <div class="home-hero-side side-right">
+          <div class="speech-bubble bubble-green bubble-right">
+            <span>...BUT MANY ARE STILL HERE!</span>
+          </div>
+          <div class="hero-animal-wrapper">
+            <img src="assets/animals/tiger.svg" alt="Bengal Tiger" class="hero-animal-img">
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SCREEN 2: HOW TO PLAY (Wireframe 2)
+         ==================================================================== -->
+    <section id="screen-how-to-play" class="screen-view">
+      <div class="how-to-play-layout">
+        
+        <header class="section-heading">
+          <h2 class="title-chunky">HOW TO PLAY</h2>
+          <p class="subtitle-simple">It's simple!</p>
+        </header>
+
+        <!-- 3 Step Cards -->
+        <div class="steps-row">
+          
+          <!-- Step 1 -->
+          <div class="step-box">
+            <div class="step-badge-num num-pink">1</div>
+            <h3 class="step-heading">SEE AN ANIMAL</h3>
+            <div class="step-illustration-box">
+              <img src="assets/animals/asian-elephant.svg" alt="Elephant" class="step-preview-img">
+            </div>
+            <p class="step-caption">Look at the animal on the screen.</p>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="step-box">
+            <div class="step-badge-num num-yellow">2</div>
+            <h3 class="step-heading">PICK YOUR CARD</h3>
+            <div class="step-cards-showcase">
+              <div class="mini-printed-card card-pink">
+                <div class="mini-card-icon">💀</div>
+                <div class="mini-card-label">GONE</div>
+                <div class="mini-card-sub">This animal is extinct.</div>
+              </div>
+              <div class="mini-printed-card card-blue">
+                <div class="mini-card-icon">💙</div>
+                <div class="mini-card-label">STILL HERE</div>
+                <div class="mini-card-sub">This animal is still alive.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="step-box">
+            <div class="step-badge-num num-green">3</div>
+            <h3 class="step-heading">SHOW IT TO THE CAMERA</h3>
+            <div class="step-cam-viewfinder">
+              <div class="cam-lens-dot">📷</div>
+              <div class="cam-scan-beam"></div>
+              <span class="cam-subtag">CARD IN FRAME</span>
+            </div>
+            <p class="step-caption">Hold your card in the camera frame.</p>
+          </div>
+
+        </div>
+
+        <!-- Action Row -->
+        <div class="how-bottom-bar">
+          <button id="btn-how-ready" class="btn-primary-yellow" type="button">
+            <span>I'M READY!</span>
+            <span class="btn-arrow">➔</span>
+          </button>
+          <div class="learn-badge-purple">
+            <span>LEARN • PLAY • CONSERVE</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SCREEN 3: CAMERA PERMISSION (Wireframe 3)
+         ==================================================================== -->
+    <section id="screen-camera-permission" class="screen-view">
+      <div class="permission-card-box">
+        
+        <div class="permission-cam-graphic">
+          <img src="assets/ui/camera-illustration.svg" alt="Cute Camera" class="cam-svg-hero">
+        </div>
+
+        <h2 class="title-chunky">WE NEED YOUR CAMERA</h2>
+        <p class="permission-desc">
+          This game uses your webcam to see your card.<br>
+          Your camera is not recorded.
+        </p>
+
+        <button id="btn-allow-camera" class="btn-primary-green btn-bounce" type="button">
+          <span class="btn-cam-icon">📹</span>
+          <span>ALLOW CAMERA</span>
+        </button>
+
+        <button id="btn-camera-fallback" class="btn-link-fallback" type="button">
+          Not working? Try again or use screen cards
+        </button>
+
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SCREEN 4: GAME SCREEN / DETECTION (Wireframe 4)
+         ==================================================================== -->
+    <section id="screen-game" class="screen-view">
+      <div class="game-view-container">
+
+        <!-- Game Header Topbar -->
+        <header class="game-header-bar">
+          <div class="game-header-logo">
+            <span class="logo-gone">GONE</span>
+            <span class="logo-or">OR</span>
+            <span class="logo-still">STILL HERE?</span>
+          </div>
+
+          <!-- Round Tracker (Round 3 / 8) -->
+          <div class="round-progress-wrapper">
+            <div class="progress-track-pill">
+              <div class="track-indicator" id="game-progress-fill"></div>
+            </div>
+            <span class="round-text" id="round-tracker-text">Round 1 / 8</span>
+          </div>
+
+          <!-- Score Badge & Sound Pill -->
+          <div class="header-right-controls">
+            <button class="sound-pill-toggle" id="btn-sound-toggle-game" type="button" title="Toggle Sound">
+              <span class="sound-icon" id="game-sound-icon">🔊</span>
+            </button>
+            <div class="score-pill-star">
+              <span class="star-icon">⭐</span>
+              <span class="score-label">Score:</span>
+              <strong id="game-score-num">0</strong>
+            </div>
+          </div>
+        </header>
+
+        <!-- Main Detection Stage -->
+        <div class="game-main-stage">
+          
+          <!-- Left Floating Animal Question Column -->
+          <div class="animal-detect-col">
+            <div class="who-am-i-banner">
+              <span class="sparkle">✦</span>
+              <h2>WHO AM I?</h2>
+              <span class="sparkle">✦</span>
+            </div>
+
+            <!-- Big Animal Physical Card Artwork -->
+            <div class="animal-stage-artwork">
+              <img id="detect-animal-img" src="assets/animals/woolly-mammoth.png" alt="Animal to identify" class="stage-animal-img">
+            </div>
+
+            <!-- Screen reader / subtle tag (Name already in artwork) -->
+            <div class="animal-name-tag" id="detect-animal-name" style="display: none;">
+              WOOLLY MAMMOTH
+            </div>
+
+            <div class="sub-question-text">
+              Gone or still here?
+            </div>
+
+            <!-- Left Green Hint Bubble -->
+            <div class="hint-speech-bubble" id="detect-animal-hint">
+              <span class="hint-prefix">HINT:</span> I live on an island in Indonesia!
+            </div>
+          </div>
+
+          <!-- Right Camera Viewfinder Column -->
+          <div class="camera-detect-col">
+            
+            <!-- Purple speech bubble with curved arrow -->
+            <div class="speech-bubble-purple">
+              <span>SHOW YOUR CARD HERE</span>
+              <span class="curved-arrow">⤷</span>
+            </div>
+
+            <!-- Camera Viewfinder Box with Pink Border -->
+            <div class="webcam-pink-frame" id="webcam-frame-box">
+              <div id="game-webcam-container" class="webcam-inner-viewport"></div>
+              <div class="scan-laser-line"></div>
+            </div>
+
+            <!-- Status Pill Below Camera -->
+            <div class="status-pill-detector" id="status-pill">
+              <span id="status-pill-emoji">👀</span>
+              <span id="status-pill-text">Let me see...</span>
+            </div>
+
+            <!-- Stability Progress Meter (450ms gate) -->
+            <div class="stability-gauge-track">
+              <div class="stability-gauge-fill" id="stability-gauge-fill"></div>
+            </div>
+
+            <!-- Instant Test / Simulation Bar (Zero blocker) -->
+            <div class="hud-sim-strip">
+              <span class="sim-label">SIMULATE:</span>
+              <button id="btn-sim-extinct" class="btn-sim sim-extinct" title="Press 1">EXTINCT (1)</button>
+              <button id="btn-sim-endangered" class="btn-sim sim-endangered" title="Press 2">STILL HERE (2)</button>
+              <button id="btn-sim-nothing" class="btn-sim sim-nothing" title="Press 0">REMOVE (0)</button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SCREEN 5: CORRECT ANSWER (Wireframe 5)
+         ==================================================================== -->
+    <section id="screen-feedback-correct" class="screen-view feedback-view">
+      <div class="feedback-layout">
+        
+        <!-- Big Green YES! Pill Header -->
+        <div class="pill-banner banner-green">
+          <span class="deco-star">✦</span>
+          <span>YES!</span>
+          <span class="deco-star">✦</span>
+        </div>
+
+        <h2 class="feedback-announcement" id="correct-announcement">
+          The Komodo Dragon is <strong class="highlight-green">STILL HERE!</strong>
+        </h2>
+
+        <div class="feedback-stage-middle">
+          <!-- Awesome Choice Badge -->
+          <div class="speech-badge-yellow badge-float">
+            <span>AWESOME CHOICE!</span>
+          </div>
+
+          <!-- Animal Picture -->
+          <div class="feedback-animal-box">
+            <img id="correct-animal-img" src="assets/animals/woolly-mammoth.png" alt="Animal" class="feedback-img">
+          </div>
+        </div>
+
+        <!-- Status & Fact Card -->
+        <div class="animal-status-card status-card-green">
+          <div class="status-title" id="correct-status-label">Status: Vulnerable</div>
+          <p class="status-desc" id="correct-status-desc">
+            Komodo dragons are still alive, but they face threats from habitat loss and climate change.
+          </p>
+        </div>
+
+        <button id="btn-next-from-correct" class="btn-primary-coral btn-bounce" type="button">
+          <span>Next Animal</span>
+          <span class="btn-arrow">➔</span>
+        </button>
+
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SCREEN 6: WRONG ANSWER (Wireframe 6)
+         ==================================================================== -->
+    <section id="screen-feedback-wrong" class="screen-view feedback-view">
+      <div class="feedback-layout">
+        
+        <!-- Big Red OOPS! Pill Header -->
+        <div class="pill-banner banner-coral">
+          <span class="deco-star">✦</span>
+          <span>OOPS!</span>
+          <span class="deco-star">✦</span>
+        </div>
+
+        <h2 class="feedback-announcement" id="wrong-announcement">
+          The Komodo Dragon is <strong class="highlight-coral">STILL HERE!</strong>
+        </h2>
+
+        <div class="feedback-stage-middle">
+          <!-- Encouragement Badge -->
+          <div class="speech-badge-purple badge-float">
+            <span>IT'S OK! YOU LEARNED SOMETHING NEW!</span>
+          </div>
+
+          <!-- Animal Picture -->
+          <div class="feedback-animal-box">
+            <img id="wrong-animal-img" src="assets/animals/woolly-mammoth.png" alt="Animal" class="feedback-img">
+          </div>
+        </div>
+
+        <!-- Status & Fact Card -->
+        <div class="animal-status-card status-card-coral">
+          <div class="status-title" id="wrong-status-label">Status: Vulnerable</div>
+          <p class="status-desc" id="wrong-status-desc">
+            Komodo dragons are still alive, but they face threats from habitat loss and climate change.
+          </p>
+        </div>
+
+        <button id="btn-next-from-wrong" class="btn-primary-coral btn-bounce" type="button">
+          <span>Next Animal</span>
+          <span class="btn-arrow">➔</span>
+        </button>
+
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SCREEN 7: FINAL SCORE (Wireframe 7)
+         ==================================================================== -->
+    <section id="screen-result" class="screen-view">
+      <div class="result-layout-wireframe">
+        
+        <header class="result-title-group">
+          <h2 class="title-chunky">YOU DID IT!</h2>
+          <p class="subtitle-score">Your final score</p>
+          
+          <div class="score-display-wrapper">
+            <div class="score-pill-big" id="final-score-pill">6 / 8</div>
+            <div class="badge-knowledge-purple">YOU KNOW YOUR WILDLIFE!</div>
+          </div>
+        </header>
+
+        <!-- Two Group Shelves: GONE vs STILL HERE -->
+        <div class="result-shelves-grid">
+          
+          <!-- GONE SHELF -->
+          <div class="shelf-box shelf-gone">
+            <div class="shelf-header">
+              <span class="shelf-title text-pink">GONE</span>
+            </div>
+            <div class="shelf-animals-row" id="shelf-gone-list">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+
+          <!-- STILL HERE SHELF -->
+          <div class="shelf-box shelf-still">
+            <div class="shelf-header">
+              <span class="shelf-title text-green">STILL HERE</span>
+            </div>
+            <div class="shelf-animals-row" id="shelf-still-list">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Exhibition Message -->
+        <div class="result-conservation-strip">
+          <div class="strip-headline">STILL HERE DOESN'T MEAN SAFE.</div>
+          <p class="strip-copy">Some species are already gone. Others still have a chance.</p>
+          <div class="strip-pill-timeline">
+            EXTINCT ➔ ENDANGERED ➔ CONSERVE
+          </div>
+        </div>
+
+        <!-- Result Action Buttons -->
+        <div class="result-action-row">
+          <button id="btn-result-play-again" class="btn-primary-blue" type="button">
+            <span>▶ PLAY AGAIN</span>
+            <span class="btn-arrow">➔</span>
+          </button>
+          <button id="btn-result-explore" class="btn-secondary-white" type="button">
+            EXPLORE THE EXHIBITION
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SCREEN 8: ABOUT / CONSERVATION (Wireframe 8)
+         ==================================================================== -->
+    <section id="screen-about" class="screen-view">
+      <div class="about-layout-wireframe">
+        
+        <!-- Left Column: Mission Copy & 3 Pillars -->
+        <div class="about-left-col">
+          <h2 class="about-headline">
+            SMALL CHOICES<br>
+            MAKE A BIG DIFFERENCE
+          </h2>
+          <p class="about-intro">
+            Every animal plays a role in our planet's story. By learning about them, we can help protect the ones that are still here.
+          </p>
+
+          <!-- 3 Pillars -->
+          <div class="pillars-list">
+            <!-- Learn -->
+            <div class="pillar-card">
+              <div class="pillar-icon-circle icon-green">🌱</div>
+              <div class="pillar-text">
+                <div class="pillar-title">LEARN</div>
+                <div class="pillar-sub">About wildlife</div>
+              </div>
+            </div>
+
+            <!-- Care -->
+            <div class="pillar-card">
+              <div class="pillar-icon-circle icon-pink">❤️</div>
+              <div class="pillar-text">
+                <div class="pillar-title">CARE</div>
+                <div class="pillar-sub">For their habitats</div>
+              </div>
+            </div>
+
+            <!-- Conserve -->
+            <div class="pillar-card">
+              <div class="pillar-icon-circle icon-blue">🌐</div>
+              <div class="pillar-text">
+                <div class="pillar-title">CONSERVE</div>
+                <div class="pillar-sub">For a brighter tomorrow</div>
+              </div>
+            </div>
+          </div>
+
+          <button id="btn-about-back" class="btn-primary-coral" type="button">
+            <span>START THE GAME</span>
+            <span class="btn-arrow">➔</span>
+          </button>
+        </div>
+
+        <!-- Right Column: Earth Illustration & Badge -->
+        <div class="about-right-col">
+          <div class="earth-badge-wrapper">
+            <img src="assets/ui/earth-illustration.svg" alt="Planet Earth" class="earth-hero-img">
+            <div class="speech-badge-blue badge-earth">
+              <span class="badge-heart">💖</span>
+              <span>A BRIGHTER TOMORROW IS WILDLIFE TOGETHER</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+  <!-- SoundCN Audio Library (https://soundcn.xyz/) -->
+  <script src="soundcn.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

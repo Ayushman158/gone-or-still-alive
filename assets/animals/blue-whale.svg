@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgWhale" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E1F5FE"/>
+      <stop offset="100%" stop-color="#B3E5FC"/>
+    </linearGradient>
+    <linearGradient id="whaleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#29B6F6"/>
+      <stop offset="100%" stop-color="#0288D1"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="320" rx="30" fill="url(#bgWhale)"/>
+  <!-- Ocean bubbles -->
+  <circle cx="80" cy="90" r="10" fill="#FFFFFF" opacity="0.6"/>
+  <circle cx="95" cy="70" r="6" fill="#FFFFFF" opacity="0.6"/>
+  <circle cx="310" cy="80" r="12" fill="#FFFFFF" opacity="0.6"/>
+
+  <!-- Water Spout -->
+  <path d="M125 100 C125 50 100 40 90 45 M125 100 C128 40 145 35 155 45 M125 100 L125 40" fill="none" stroke="#4FC3F7" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- Streamlined Whale Body -->
+  <path d="M70 170 C90 110 200 115 280 145 C320 160 340 165 370 150 C370 175 350 190 320 190 C250 195 180 230 110 230 C70 230 60 200 70 170 Z" fill="url(#whaleGrad)"/>
+
+  <!-- Flukes / Tail Fin -->
+  <path d="M360 165 C380 135 395 140 385 165 C395 190 380 195 360 165 Z" fill="#0277BD"/>
+
+  <!-- Ventral Pleats / Grooves (Throat) -->
+  <path d="M90 195 C130 205 180 205 220 195 M100 208 C140 215 185 215 215 205 M115 218 C145 224 175 224 200 216" stroke="#81D4FA" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Pectoral Flipper -->
+  <path d="M165 180 C185 220 175 245 155 240 C145 235 155 205 165 180 Z" fill="#0277BD"/>
+
+  <!-- Small Dorsal Fin -->
+  <path d="M280 140 C290 128 295 128 300 142 Z" fill="#0277BD"/>
+
+  <!-- Gentle Whale Eye -->
+  <circle cx="95" cy="165" r="6" fill="#01579B"/>
+  <circle cx="93" cy="163" r="2" fill="#FFFFFF"/>
+  <!-- Smile line -->
+  <path d="M80 180 Q105 190 130 178" fill="none" stroke="#01579B" stroke-width="3" stroke-linecap="round"/>
+</svg>

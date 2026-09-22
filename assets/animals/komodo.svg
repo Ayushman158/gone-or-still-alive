@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 320" width="100%" height="100%">
+  <defs>
+    <linearGradient id="komodoBody" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7D7461"/>
+      <stop offset="50%" stop-color="#5E5848"/>
+      <stop offset="100%" stop-color="#433F34"/>
+    </linearGradient>
+    <linearGradient id="komodoBelly" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#9C927C"/>
+      <stop offset="100%" stop-color="#736C5A"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Ground shadow -->
+  <ellipse cx="250" cy="275" rx="200" ry="24" fill="#E2DDD2" opacity="0.8"/>
+
+  <!-- Back Left Leg -->
+  <path d="M120 180 C95 195 90 235 105 260 C110 268 115 268 120 265 C125 250 135 220 145 200 Z" fill="#433F34"/>
+  <!-- Claws -->
+  <circle cx="106" cy="265" r="4" fill="#2B2D42"/>
+  <circle cx="114" cy="268" r="4" fill="#2B2D42"/>
+  <circle cx="122" cy="266" r="4" fill="#2B2D42"/>
+
+  <!-- Long Muscular Tail -->
+  <path d="M140 180 C90 190 40 220 25 240 C15 255 30 260 45 250 C80 225 125 205 160 195 Z" fill="#5E5848"/>
+
+  <!-- Main Heavy Body -->
+  <path d="M150 180 C180 140 280 145 350 165 C380 175 390 210 340 230 C270 250 170 235 150 180 Z" fill="url(#komodoBody)"/>
+
+  <!-- Underbelly highlight -->
+  <path d="M180 200 C230 215 300 215 340 195 C330 215 270 235 190 220 Z" fill="url(#komodoBelly)"/>
+
+  <!-- Back Right Leg (foreground) -->
+  <path d="M165 185 C145 205 140 240 155 268 C160 274 175 274 180 265 C185 245 195 215 200 190 Z" fill="#5E5848"/>
+  <circle cx="158" cy="272" r="4" fill="#2B2D42"/>
+  <circle cx="166" cy="275" r="4" fill="#2B2D42"/>
+  <circle cx="176" cy="273" r="4" fill="#2B2D42"/>
+
+  <!-- Front Left Leg -->
+  <path d="M300 180 C305 200 300 235 305 260 C310 268 322 268 325 262 C328 245 330 215 335 185 Z" fill="#433F34"/>
+  <circle cx="308" cy="265" r="4" fill="#2B2D42"/>
+  <circle cx="316" cy="267" r="4" fill="#2B2D42"/>
+  <circle cx="324" cy="265" r="4" fill="#2B2D42"/>
+
+  <!-- Front Right Leg (powerful) -->
+  <path d="M330 180 C345 205 340 240 350 270 C355 278 370 276 375 268 C380 245 380 210 370 180 Z" fill="#5E5848"/>
+  <circle cx="353" cy="274" r="4" fill="#2B2D42"/>
+  <circle cx="362" cy="277" r="4" fill="#2B2D42"/>
+  <circle cx="372" cy="274" r="4" fill="#2B2D42"/>
+
+  <!-- Neck and Low Head Profile -->
+  <path d="M340 170 C370 160 410 160 435 170 C455 180 440 200 405 205 C370 210 340 195 340 170 Z" fill="url(#komodoBody)"/>
+
+  <!-- Snout -->
+  <path d="M420 168 C445 172 455 180 445 188 C430 195 410 195 395 190 Z" fill="#5E5848"/>
+  <ellipse cx="438" cy="177" rx="3" ry="2" fill="#2B2D42"/> <!-- Nostril -->
+
+  <!-- Small reptilian eye with brow -->
+  <ellipse cx="405" cy="172" rx="6" ry="5" fill="#E5C158"/>
+  <ellipse cx="405" cy="172" rx="2.5" ry="4" fill="#2B2D42"/>
+  <path d="M398 168 Q405 165 412 168" stroke="#38342A" stroke-width="2.5" fill="none"/>
+
+  <!-- Characteristic Yellow Forked Tongue -->
+  <path d="M445 184 C465 186 480 192 490 200 M490 200 L498 198 M490 200 L496 206" fill="none" stroke="#F4D03F" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Reptilian Scales / Textures -->
+  <circle cx="240" cy="175" r="3" fill="#433F34" opacity="0.6"/>
+  <circle cx="260" cy="180" r="3" fill="#433F34" opacity="0.6"/>
+  <circle cx="280" cy="170" r="3.5" fill="#433F34" opacity="0.6"/>
+  <circle cx="220" cy="185" r="3" fill="#433F34" opacity="0.6"/>
+  <circle cx="300" cy="185" r="3" fill="#433F34" opacity="0.6"/>
+  <circle cx="360" cy="185" r="3" fill="#433F34" opacity="0.6"/>
+</svg>

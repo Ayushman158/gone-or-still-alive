@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="currentColor">
+  <!-- Stylized playful fossil skull -->
+  <path d="M50 15 C30 15 18 30 18 52 C18 68 28 78 36 82 L36 88 C36 90 38 92 41 92 L59 92 C62 92 64 90 64 88 L64 82 C72 78 82 68 82 52 C82 30 70 15 50 15 Z" />
+  <!-- Eye sockets (cutout) -->
+  <ellipse cx="36" cy="50" rx="9" ry="12" fill="#FFFDF7" />
+  <ellipse cx="64" cy="50" rx="9" ry="12" fill="#FFFDF7" />
+  <!-- Nose cavity -->
+  <polygon points="50,60 44,70 56,70" fill="#FFFDF7" />
+  <!-- Teeth marks -->
+  <line x1="43" y1="82" x2="43" y2="92" stroke="#FFFDF7" stroke-width="3" />
+  <line x1="50" y1="82" x2="50" y2="92" stroke="#FFFDF7" stroke-width="3" />
+  <line x1="57" y1="82" x2="57" y2="92" stroke="#FFFDF7" stroke-width="3" />
+</svg>

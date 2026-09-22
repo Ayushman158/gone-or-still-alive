@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgTiger" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF3E0"/>
+      <stop offset="100%" stop-color="#FFE082"/>
+    </linearGradient>
+    <linearGradient id="tigerGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FF9800"/>
+      <stop offset="100%" stop-color="#F57C00"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="320" rx="30" fill="url(#bgTiger)"/>
+  <!-- Jungle leaves -->
+  <path d="M40 30 C70 15 90 45 95 80 C70 85 45 65 40 30 Z" fill="#66BB6A" opacity="0.6"/>
+  <path d="M320 40 C350 20 380 50 375 85 C350 90 325 75 320 40 Z" fill="#66BB6A" opacity="0.6"/>
+
+  <!-- Back Legs -->
+  <rect x="235" y="175" width="30" height="95" rx="15" fill="#E65100"/>
+  <rect x="280" y="180" width="28" height="90" rx="14" fill="#E65100"/>
+
+  <!-- Tiger Body -->
+  <ellipse cx="205" cy="180" rx="90" ry="55" fill="url(#tigerGrad)"/>
+
+  <!-- White Chest & Underbelly -->
+  <path d="M140 180 C150 215 220 225 260 200 C240 220 170 225 140 180 Z" fill="#FFFFFF"/>
+
+  <!-- Front Legs -->
+  <rect x="135" y="175" width="32" height="95" rx="16" fill="#F57C00"/>
+  <rect x="180" y="180" width="30" height="90" rx="15" fill="#FF9800"/>
+
+  <!-- Tiger Paws with white toes -->
+  <ellipse cx="151" cy="265" rx="18" ry="8" fill="#FFF"/>
+  <ellipse cx="195" cy="265" rx="16" ry="8" fill="#FFF"/>
+  <ellipse cx="250" cy="265" rx="16" ry="8" fill="#FFF"/>
+  <ellipse cx="294" cy="265" rx="15" ry="8" fill="#FFF"/>
+
+  <!-- Long Striped Tail -->
+  <path d="M295 160 C335 150 355 190 330 220 C320 230 305 210 320 195 C335 180 320 165 295 170" fill="none" stroke="#F57C00" stroke-width="14" stroke-linecap="round"/>
+  <!-- Tail Stripes -->
+  <circle cx="330" cy="180" r="4" fill="#212121"/>
+  <circle cx="338" cy="195" r="4" fill="#212121"/>
+  <circle cx="325" cy="212" r="4" fill="#212121"/>
+
+  <!-- Big Round Head -->
+  <circle cx="110" cy="135" r="50" fill="url(#tigerGrad)"/>
+  <!-- Round Ears -->
+  <circle cx="75" cy="95" r="18" fill="#F57C00"/>
+  <circle cx="75" cy="95" r="10" fill="#212121"/>
+  <circle cx="145" cy="95" r="18" fill="#F57C00"/>
+  <circle cx="145" cy="95" r="10" fill="#212121"/>
+
+  <!-- White Cheeks -->
+  <ellipse cx="80" cy="155" rx="20" ry="16" fill="#FFFFFF"/>
+  <ellipse cx="140" cy="155" rx="20" ry="16" fill="#FFFFFF"/>
+  <ellipse cx="110" cy="158" rx="16" ry="12" fill="#FFFFFF"/>
+
+  <!-- Nose & Whiskers -->
+  <polygon points="110,148 102,140 118,140" fill="#FF8A80"/>
+  <path d="M70 155 L50 150 M70 160 L48 162 M150 155 L170 150 M150 160 L172 162" stroke="#424242" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Bright Eyes -->
+  <circle cx="92" cy="128" r="7" fill="#FFEB3B"/>
+  <circle cx="92" cy="128" r="4" fill="#212121"/>
+  <circle cx="90" cy="126" r="1.5" fill="#FFFFFF"/>
+  <circle cx="128" cy="128" r="7" fill="#FFEB3B"/>
+  <circle cx="128" cy="128" r="4" fill="#212121"/>
+  <circle cx="126" cy="126" r="1.5" fill="#FFFFFF"/>
+
+  <!-- Distinctive Black Tiger Stripes -->
+  <path d="M110 90 L110 110 M100 95 L104 105 M120 95 L116 105" stroke="#212121" stroke-width="4" stroke-linecap="round"/>
+  <path d="M68 125 L80 130 M152 125 L140 130" stroke="#212121" stroke-width="4" stroke-linecap="round"/>
+  <!-- Body Stripes -->
+  <path d="M165 145 L175 170 M195 140 L200 175 M225 142 L230 175 M255 145 L260 170" stroke="#212121" stroke-width="5" stroke-linecap="round"/>
+</svg>
